@@ -1,11 +1,19 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/layout';
 import utilStyles from '../styles/utils.module.css';
-import { getSortedPostsData } from '../lib/posts';
+import { AllPostsData, getSortedPostsData } from '../lib/posts';
 import Link from 'next/link';
 import Date from '../components/date';
+import { GetStaticProps } from 'next';
 
-const Home = ({ allPostsData }) => {
+
+
+
+interface HomeProps{
+  allPostsData: AllPostsData[]
+}
+
+const Home = ({ allPostsData }: HomeProps) => {
   return (
     <Layout home>
       <Head>
@@ -42,7 +50,7 @@ const Home = ({ allPostsData }) => {
 export default Home;
 
 // static generation with data at build time
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const allPostsData = getSortedPostsData();
   return {
     props: {
